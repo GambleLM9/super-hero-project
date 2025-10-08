@@ -104,7 +104,7 @@ app.get("/", (req, res) => {
   const heroFields = require("./config/heroInputs.config.js");
   res.render("heroForm", heroFields);
 });
-const { MongoClient } = require("mongodb");
+/* const { MongoClient } = require("mongodb");
 const MONGODB_URI = process.env.MONGODB_URI;
 let db;
 MongoClient.connect(MONGODB_URI)
@@ -113,7 +113,7 @@ MongoClient.connect(MONGODB_URI)
     db = client.db("superhero-db");
   })
   .catch((error) => console.error("❌ MongoDB Error", error));
-
+ */
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });

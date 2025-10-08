@@ -1,45 +1,326 @@
 body {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #fef6e4;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 35px,
+    rgba(148, 124, 128, 0.1) 35px,
+    rgba(255, 183, 195, 0.1) 70px
+  );
   min-height: 100vh;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Comic Sans MS", "Segoe UI", sans-serif;
+  padding: 20px;
 }
 
 .container {
   background: white;
-  border-radius: 15px;
-  padding: 2rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 1200px;
+  box-shadow: 0 2px 0 #e8dcc5, 0 4px 0 #e0d4bd, 0 8px 20px rgba(0, 0, 0, 0.1);
+  border: 3px solid #001858;
+  position: relative;
+  margin: 0 auto;
 }
 
-.card {
-  transition: transform 0.2s;
-  border: none;
+
+/* Little doodles around the container */
+.container::before {
+  content: "★";
+  position: absolute;
+  top: -15px;
+  left: 20px;
+  font-size: 30px;
+  color: #f582ae;
+  transform: rotate(-15deg);
 }
 
-.card-hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-}
-
-.card-header {
-  border-radius: 15px 15px 0 0;
+.container::after {
+  content: "★";
+  position: absolute;
+  top: -10px;
+  right: 30px;
+  font-size: 24px;
+  color: #8bd3dd;
+  transform: rotate(25deg);
 }
 
 h1 {
-  color: #333;
-  font-weight: bold;
+  color: #001858;
+  font-weight: 900;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+  display: inline-block;
+  width: 100%;
 }
 
+h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #f582ae;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* Cards with a comic book feel */
+.card {
+  border: 3px solid #001858;
+  border-radius: 15px;
+  background: white;
+  box-shadow: 5px 5px 0 rgba(0, 24, 88, 0.1);
+  transition: all 0.2s;
+  overflow: hidden;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 7px 7px 0 rgba(0, 24, 88, 0.15);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  color: #001858;
+  font-weight: 800;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-title i {
+  color: #f582ae;
+  font-size: 1.5rem;
+}
+
+.card-text {
+  color: #172c66;
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+.card-text strong {
+  color: #001858;
+  font-weight: 700;
+}
+
+/* Fun badge styles */
 .badge {
+  padding: 6px 14px;
   font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 20px;
+  border: 2px solid #001858;
+  display: inline-block;
 }
 
+.badge.bg-warning {
+  background: #ffd803 !important;
+  color: #001858 !important;
+}
+
+/* Buttons with a playful style */
 .btn {
-  transition: all 0.3s;
+  border-radius: 10px;
+  font-weight: 700;
+  padding: 8px 20px;
+  border: 2px solid #001858;
+  transition: all 0.2s;
+  position: relative;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
 }
 
 .btn:hover {
-  transform: scale(1.05);
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: #8bd3dd;
+  color: #001858;
+  border-color: #001858;
+}
+
+.btn-primary:hover {
+  background: #72c4d0;
+  color: #001858;
+  border-color: #001858;
+}
+
+.btn-outline-primary {
+  background: white;
+  color: #8bd3dd;
+  border-color: #8bd3dd;
+}
+
+.btn-outline-primary:hover {
+  background: #8bd3dd;
+  color: #001858;
+  border-color: #001858;
+}
+
+.btn-outline-danger {
+  background: white;
+  color: #f582ae;
+  border-color: #f582ae;
+}
+
+.btn-outline-danger:hover {
+  background: #f582ae;
+  color: white;
+  border-color: #001858;
+}
+
+.btn-outline-secondary {
+  background: white;
+  color: #172c66;
+  border-color: #172c66;
+}
+
+.btn-outline-secondary:hover {
+  background: #e4e4e4;
+}
+
+.btn-lg {
+  padding: 12px 30px;
+  font-size: 1rem;
+}
+
+/* Form styling */
+.form-label {
+  color: #001858;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.form-control {
+  border: 2px solid #001858;
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  transition: all 0.2s;
+  background: #fef6e4;
+}
+
+.form-control:focus {
+  border-color: #f582ae;
+  box-shadow: 0 0 0 3px rgba(245, 130, 174, 0.2);
+  background: white;
+}
+
+.form-check-input {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #001858;
+  border-radius: 5px;
+}
+
+.form-check-input:checked {
+  background-color: #8bd3dd;
+  border-color: #001858;
+}
+
+.form-check-label {
+  color: #172c66;
+  font-weight: 600;
+  padding-left: 8px;
+}
+
+/* Card header for forms */
+.card-header {
+  background: #f582ae !important;
+  color: white !important;
+  border: none !important;
+  border-bottom: 3px solid #001858 !important;
+  padding: 20px;
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+/* Icon colors */
+.bi-lock-fill {
+  color: #f582ae;
+}
+
+.bi-unlock-fill {
+  color: #8bd3dd;
+}
+
+/* Grid adjustments */
+.row {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.col-md-6,
+.col-lg-4 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Alert styling */
+.alert {
+  border-radius: 15px;
+  border: 3px solid #001858;
+  font-weight: 600;
+}
+
+.alert-info {
+  background: #8bd3dd;
+  color: #001858;
+}
+
+/* Secret identity indicator */
+.text-danger {
+  color: #f582ae !important;
+}
+
+.text-success {
+  color: #8bd3dd !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .container {
+    padding: 20px;
+  }
+}
+
+/* Small decorative elements */
+.hero-display {
+  position: relative;
+}
+
+.d-flex.gap-2 {
+  gap: 8px !important;
+  margin-top: 15px;
+}
+
+/* Make it feel less computerized */
+.card-text {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1,
+.btn,
+.card-title {
+  font-family: "Comic Sans MS", "Arial Rounded MT Bold", sans-serif;
 }

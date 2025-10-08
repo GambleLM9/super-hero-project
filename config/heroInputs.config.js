@@ -1,3 +1,4 @@
+// config/heroInputs.config.js
 module.exports = {
     superName: {
         id: 'superName',
@@ -24,6 +25,16 @@ module.exports = {
         min: 1,
         max: 10
     },
+    powerLevel: {
+        id: 'powerLevel',
+        name: 'powerLevel',
+        label: 'Power Levek (1-10)',
+        type: 'number',
+        required: true,
+        min: 1,
+        max: 10
+    },
+
     secretIdentity: {
         id: 'secretIdentity',
         name: 'secretIdentity',

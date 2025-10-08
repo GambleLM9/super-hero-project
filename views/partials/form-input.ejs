@@ -1,0 +1,11 @@
+<div class="mb-3">
+    <label for="<%= id %>" class="form-label"></label>
+    <input type="<%= type %>" class="form-control" id="<%= type %>"
+        id="<%= id %>"
+        name="<%= name %>"
+        placeholder="<%= placeholder || '' %>"
+        <% if (min !== undefined) { %>min="<%= min %>"<% } %>
+        <% if (max !== undefined) { %>max="<%= max %>"<% } %>
+        <% if (required) { %>required<% } %>
+        />
+</div>

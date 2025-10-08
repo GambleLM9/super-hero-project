@@ -18,15 +18,15 @@ async function readHeroes() {
   }
 }
 async function writeHeroes(heroes) {
-    await fs.writeFile(DATA_FILE, JSON.stringify(heroes, null, 2));
-    }
-    // Initialize empty heroes file
-    async function initializeDataFile() {
-    try {
+  await fs.writeFile(DATA_FILE, JSON.stringify(heroes, null, 2));
+}
+// Initialize empty heroes file
+async function initializeDataFile() {
+  try {
     await fs.access(DATA_FILE);
-    } catch {
+  } catch {
     await writeHeroes([]);
-    }
+  }
 }
 initializeDataFile();
 
@@ -102,18 +102,18 @@ app.delete("/heroes/:id", async (req, res) => {
 });
 app.get("/", (req, res) => {
   const heroFields = require("./config/heroInputs.config.js");
-  res.render("heroForm", heroFields);
+  res.render("heroForm", { heroFields });
 });
-const { MongoClient } = require("mongodb");
-const MONGODB_URI = process.env.MONGODB_URI;
-let db;
-MongoClient.connect(MONGODB_URI)
-  .then((client) => {
-    console.log("✅ Connected to MongoDB");
-    db = client.db("superhero-db");
-  })
-  .catch((error) => console.error("❌ MongoDB Error", error));
+// const { MongoClient } = require("mongodb");
+// const MONGODB_URI = process.env.MONGODB_URI;
+// let db;
+// MongoClient.connect(MONGODB_URI)
+//   .then((client) => {
+//     console.log("✅ Connected to MongoDB");
+//     db = client.db("superhero-db");
+//   })
+//   .catch((error) => console.error("❌ MongoDB Error", error));
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });

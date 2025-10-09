@@ -1,8 +1,38 @@
 [
   {
-    "id": "1759952813680",
-    "powerLevel": null,
+    "id": "1760039283382",
+    "superName": "Spider Man",
+    "realName": "Peter Parker",
+    "superpower": "Webs",
+    "powerLevel": 10,
     "secretIdentity": false,
-    "createdAt": "2025-10-08T19:46:53.680Z"
+    "createdAt": "2025-10-09T19:48:03.382Z"
+  },
+  {
+    "id": "1760039418269",
+    "superName": "Iron Man",
+    "realName": "Tony Stark",
+    "superpower": "Technology.",
+    "powerLevel": 9,
+    "secretIdentity": false,
+    "createdAt": "2025-10-09T19:50:18.269Z"
+  },
+  {
+    "id": "1760039750275",
+    "superName": "Spider Man",
+    "realName": "Peter Parker",
+    "superpower": "Webs",
+    "powerLevel": 5,
+    "secretIdentity": false,
+    "createdAt": "2025-10-09T19:55:50.275Z"
+  },
+  {
+    "id": "1760040171131",
+    "superName": "12",
+    "realName": "Peter Parker",
+    "superpower": "Webs",
+    "powerLevel": 10,
+    "secretIdentity": false,
+    "createdAt": "2025-10-09T20:02:51.131Z"
   }
 ]

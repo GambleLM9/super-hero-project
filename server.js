@@ -1,12 +1,3 @@
-const { MongoClient } = require("mongodb");
-const MONGODB_URI = process.env.MONGODB_URI;
-let db;
-MongoClient.connect(MONGODB_URI)
-  .then((client) => {
-    console.log("✅ Connected to MongoDB");
-    db = client.db("superhero-db");
-  })
-  .catch((error) => console.error("❌ MongoDB Error", error));
 const express = require("express");
 const fs = require("fs").promises;
 const path = require("path");
@@ -29,7 +20,6 @@ async function readHeroes() {
 async function writeHeroes(heroes) {
   await fs.writeFile(DATA_FILE, JSON.stringify(heroes, null, 2));
 }
-// Initialize empty heroes file
 async function initializeDataFile() {
   try {
     await fs.access(DATA_FILE);
@@ -38,83 +28,79 @@ async function initializeDataFile() {
   }
 }
 initializeDataFile();
-
-app.post('/heroes', async (req, res) => {
+app.post("/heroes", async (req, res) => {
   try {
-  const newHero = {
-  superName: req.body.superName,
-  realName: req.body.realName,
-  superpower: req.body.superpower,
-  powerLevel: parseInt(req.body.powerLevel),
-  secretIdentity: req.body.secretIdentity === 'true',
-  createdAt: new Date()
-  };
-  const result = await db.collection('heroes').insertOne(newHero);
-  res.status(201).json({
-  success: true,
-  message: 'Hero created successfully!',
-  redirectTo: '/heroes',
-  insertedId: result.insertedId
-  });
+    const heroes = await readHeroes();
+    const newHero = {
+      id: Date.now().toString(),
+      superName: req.body.superName,
+      realName: req.body.realName,
+      superpower: req.body.superpower,
+      powerLevel: parseInt(req.body.powerLevel),
+      secretIdentity: req.body.secretIdentity === "true",
+      createdAt: new Date().toISOString(),
+    };
+    heroes.push(newHero);
+    await writeHeroes(heroes);
+    res.status(201).json({
+      success: true,
+      message: "Hero created successfully!",
+      redirectTo: "/heroes",
+    });
   } catch (error) {
-  res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
-  });
-  app.get("/heroes", async (req, res) => {
-    try {
-      const heroes = await db.collection("heroes").find({}).toArray();
-      if (req.accepts("html")) {
-        res.render("heroList", { heroes });
-      } else {
-        res.json({ success: true, count: heroes.length, data: heroes });
-      }
-    } catch (error) {
-      res.status(500).json({ success: false, error: error.message });
+});
+app.get("/heroes", async (req, res) => {
+  try {
+    const heroes = await readHeroes();
+    if (req.accepts("html")) {
+      res.render("heroList", { heroes });
+    } else {
+      res.json({ success: true, count: heroes.length, data: heroes });
     }
-  });
-  app.put("/heroes/:id", async (req, res) => {
-    try {
-      const result = await db.collection("heroes").updateOne(
-        { _id: new ObjectId(req.params.id) },
-        {
-          $set: {
-            superName: req.body.superName,
-            realName: req.body.realName,
-            superpower: req.body.superpower,
-            powerLevel: parseInt(req.body.powerLevel),
-            secretIdentity: req.body.secretIdentity === "true",
-            updatedAt: new Date(),
-          },
-        }
-      );
-      if (result.matchedCount === 0) {
-        return res
-          .status(404)
-          .json({ success: false, error: "Hero not found" });
-      }
-      res.json({ success: true, message: "Hero updated successfully" });
-    } catch (error) {
-      res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+app.put("/heroes/:id", async (req, res) => {
+  try {
+    const heroes = await readHeroes();
+    const heroIndex = heroes.findIndex((h) => h.id === req.params.id);
+    if (heroIndex === -1) {
+      return res.status(404).json({ success: false, error: "Hero not found" });
     }
-  });
-  app.delete("/heroes/:id", async (req, res) => {
-    try {
-      const result = await db.collection("heroes").deleteOne({
-        _id: new ObjectId(req.params.id),
-      });
-      if (result.deletedCount === 0) {
-        return res
-          .status(404)
-          .json({ success: false, error: "Hero not found" });
-      }
-      res.json({ success: true, message: "Hero deleted successfully" });
-    } catch (error) {
-      res.status(500).json({ success: false, error: error.message });
+    heroes[heroIndex] = {
+      ...heroes[heroIndex],
+      superName: req.body.superName,
+      realName: req.body.realName,
+      superpower: req.body.superpower,
+      powerLevel: parseInt(req.body.powerLevel),
+      secretIdentity: req.body.secretIdentity === "true",
+      updatedAt: new Date().toISOString(),
+    };
+    await writeHeroes(heroes);
+    res.json({ success: true, data: heroes[heroIndex] });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+app.delete("/heroes/:id", async (req, res) => {
+  try {
+    const heroes = await readHeroes();
+    const filteredHeroes = heroes.filter((h) => h.id !== req.params.id);
+    if (heroes.length === filteredHeroes.length) {
+      return res.status(404).json({ success: false, error: "Hero not found" });
     }
-  });
+    await writeHeroes(filteredHeroes);
+    res.json({ success: true, message: "Hero deleted" });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 app.get("/", (req, res) => {
   const heroFields = require("./config/heroInputs.config.js");
-  res.render("heroForm", { heroFields });
+  res.render("heroForm", heroFields);
 });
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
